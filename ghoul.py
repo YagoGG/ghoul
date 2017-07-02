@@ -143,15 +143,18 @@ def review(args):
 
 argparser = argparse.ArgumentParser()
 argparser.add_argument('--version', action='version', version='%(prog)s 0.0.1')
-argparser.add_argument('-r', '--remote')
+argparser.add_argument('-r', '--remote',
+                       help='remote pointing to the GitHub repo to work on')
 
-subparsers = argparser.add_subparsers(help='sub-command help')
-comment_parser = subparsers.add_parser('comment')
+subparsers = argparser.add_subparsers()
+comment_parser = subparsers.add_parser('comment',
+                                       help='post a comment in a PR/issue')
 comment_parser.add_argument('issue', type=int)
 comment_parser.add_argument('-m', '--message')
 comment_parser.set_defaults(func=comment)
 
-review_parser = subparsers.add_parser('review')
+review_parser = subparsers.add_parser('review',
+                                      help='clone the remote branch in a PR')
 review_parser.add_argument('pull_request', type=int)
 review_parser.set_defaults(func=review)
 
